@@ -260,7 +260,7 @@ class AQIMapVisualizer:
         
         return m
     
-    def save_map(self, map_obj: folium.Map, filename: str) -> str:
+    def save_map(self, map_obj: folium.Map, filename: str = "latest_aqi_map.html") -> str:
         """
         保存地圖到HTML檔案
         
@@ -271,9 +271,7 @@ class AQIMapVisualizer:
         Returns:
             保存的檔案路徑
         """
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        full_filename = f"{filename}_{timestamp}.html"
-        filepath = os.path.join("..", "outputs", full_filename)
+        filepath = os.path.join("..", "outputs", filename)
         
         # 確保輸出目錄存在
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
@@ -295,12 +293,12 @@ def main():
         # 1. 創建全台AQI地圖
         print("\n1. 創建全台AQI地圖...")
         taiwan_map = visualizer.create_aqi_map()
-        taiwan_file = visualizer.save_map(taiwan_map, "taiwan_aqi_map")
+        taiwan_file = visualizer.save_map(taiwan_map, "latest_aqi_map")
         
         # 2. 創建AQI熱力圖
         print("\n2. 創建AQI熱力圖...")
         heatmap = visualizer.create_heatmap()
-        heatmap_file = visualizer.save_map(heatmap, "taiwan_aqi_heatmap")
+        heatmap_file = visualizer.save_map(heatmap, "latest_aqi_heatmap")
         
         print(f"\n=== 完成 ===")
         print(f"地圖: {taiwan_file}")
